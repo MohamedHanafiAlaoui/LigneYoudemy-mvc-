@@ -1,0 +1,93 @@
+CREATE TABLE categories (
+  id_categories SERIAL PRIMARY KEY,
+  namecategories varchar(50) NOT NULL
+)
+
+CREATE TABLE users(
+  id_user SERIAL PRIMARY KEY,
+  FullName varchar(100) NOT NULL,
+  Password varchar(255) NOT NULL,
+  Email varchar(250) NOT NULL,
+  id_role int DEFAULT NULL,
+  image_user varchar(255) DEFAULT NULL
+)
+
+
+CREATE TABLE role (
+  id_role SERIAL PRIMARY KEY,
+  type_role varchar(70) NOT NULL
+)
+
+
+
+
+CREATE TYPE s_status AS ENUM ('active', 'disactive');
+
+CREATE TABLE cours (
+    id_cours SERIAL PRIMARY KEY,
+    titre_cours VARCHAR(255) NOT NULL,
+    contenu TEXT NOT NULL,
+    description VARCHAR(250),
+    id_user INT NOT NULL,
+    C_Status  s_status ,
+    id_categories INT NOT NULL,
+    d_date TIMESTAMP  
+);
+
+
+ALTER TABLE cours ADD COLUMN image varchar(500);
+
+
+CREATE TABLE tags (
+    id_tag SERIAL PRIMARY KEY,
+    name_tag VARCHAR(50) NOT NULL
+);
+
+
+
+
+CREATE TABLE tagscours (
+    id_tagscours SERIAL PRIMARY KEY,
+    id_tag INT NOT NULL,
+    id_cours INT NOT NULL
+);
+
+
+
+CREATE TABLE classcours (
+    id_classcours SERIAL PRIMARY KEY,
+    id_cours INT NOT NULL,
+	id_user INT NOT NULL,
+    C_Status  s_status 
+
+)
+
+
+ALTER TABLE users
+ADD FOREIGN KEY (id_role) 
+REFERENCES role(id_role);
+
+
+ALTER TABLE tagscours
+ADD FOREIGN KEY (id_tag) 
+REFERENCES tags(id_tag);
+
+ALTER TABLE tagscours
+ADD FOREIGN KEY (id_cours) 
+REFERENCES cours(id_cours);
+
+ALTER TABLE classcours
+ADD FOREIGN KEY (id_cours) 
+REFERENCES cours(id_cours);
+
+ALTER TABLE classcours
+ADD FOREIGN KEY (id_user) 
+REFERENCES users(id_user);
+
+ALTER TABLE cours
+  ADD FOREIGN KEY (id_categories)
+   REFERENCES categories (id_categories)
+   ON DELETE CASCADE ON UPDATE CASCADE
+
+ALTER TABLE users 
+ADD CONSTRAINT unique_email UNIQUE (Email);
