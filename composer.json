@@ -1,14 +1,15 @@
 {
-    "name": "youdemy/mvc",
+    "name": "admin/ligne-youdemy-mvc",
     "autoload": {
         "psr-4": {
-            "App\\":"app",
-            "SecTheater\\":"src"
+          "App\\": "App/"
         }
     },
-    "require": {
-        "vlucas/phpdotenv": "^5.6",
-        "symfony/var-dumper": "^6.4"
-    }
-
+    "authors": [
+        {
+            "name": "MohamedHanafiAlaoui",
+            "email": "hanafimohamed510@gmail.com"
+        }
+    ],
+    "require": {}
 }
